@@ -34,6 +34,6 @@ You can quit the window simply by pressing `q` in `normal` mode. You can also qu
 - [ ] Add the option to use custom path/command to pydoc (for using with `pydoc`/`pydoc3`, etc)
 - [ ] Add highlight groups to replicate the highlights from the actual `pydoc` command
 - [ ] Allow for changing `q` keybinding
-- [ ] Change window height based on length of the `pydoc` output
+- [x] Change window height based on length of the `pydoc` output
 - [ ] Add option to use vertical split or horizontal split
 - [ ] Search for work on the cursor
