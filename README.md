@@ -6,7 +6,7 @@ Shows the `pydoc` documentation in a window in nvim.
 
 ## Installing
 
-Make sure that you have `pydoc3` installed an is on your PATH. 
+Make sure that you have `pydoc3` installed and is on your PATH. 
 
 Install the plugin
 
