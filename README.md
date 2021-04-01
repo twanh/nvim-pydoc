@@ -23,9 +23,9 @@ Or use any method you like.
 
 ## Usage
 
-Simple execute the `:pydoc` command with the module (of function) you want the docs on
+Simple execute the `:Pydoc` command with the module (of function) you want the docs on
 
-For example: `:pydoc os.path` 
+For example: `:Pydoc os.path` 
 
 You can quit the window simply by pressing `q` in `normal` mode. You can also quit the buffer in any way you like/are used to.
 
