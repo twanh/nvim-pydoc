@@ -36,3 +36,4 @@ You can quit the window simply by pressing `q` in `normal` mode. You can also qu
 - [ ] Allow for changing `q` keybinding
 - [ ] Change window height based on length of the `pydoc` output
 - [ ] Add option to use vertical split or horizontal split
+- [ ] Search for work on the cursor

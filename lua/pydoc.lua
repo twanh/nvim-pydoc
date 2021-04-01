@@ -21,6 +21,7 @@ local function open_pydoc(search)
   -- Set the pydoc buf to the new window 
   vim.api.nvim_win_set_buf(winnr, bufnr)
   -- Set the title and write the outpyt of the pydoc command to the buffer
+  -- FIX: Buf with name already exists, when a pydoc window is open
   vim.api.nvim_buf_set_name(bufnr, "PYDOC") 
   vim.api.nvim_buf_set_lines(bufnr, 0, 1, false, result)
   -- Set q to close the window
