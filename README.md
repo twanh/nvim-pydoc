@@ -16,7 +16,7 @@ use 'twanh/nvim-pydoc'
 ```
 ```vim
 " Using vim Plug
-plug 'twanh/nvim-pydoc'
+Plug 'twanh/nvim-pydoc'
 ```
 
 Or use any method you like.
