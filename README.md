@@ -4,6 +4,8 @@
 
 Shows the `pydoc` documentation in a window in nvim.
 
+![example](https://media.giphy.com/media/ZvIsb0uivq6aGaggF6/giphy.gif)
+
 ## Installing
 
 Make sure that you have `pydoc3` installed and is on your PATH. 
