@@ -11,11 +11,33 @@ local function close_pydoc()
 end
   
 
+local function detect_highlights(result) 
+  -- Should perhaps use the builtin match?
+  
+  -- Match headings
+  local heading_match = '%u*'
+
+  local detected = {} 
+
+  for k,v in pairs(result) do
+    if (string.len(string.match(v, heading_match)) > 0) then
+      table.insert(detected, {
+          ['line'] = k - 1, -- k - 1 because lua 1 indexed
+          ['cols'] = {0, -1}, -- the whole line
+          ['highlight'] = 'PydocHeader',
+        })
+    end
+  end
+
+  return detected
+end
+
 local function open_pydoc(search)
+  
   -- Get the pydoc output
   local result = vim.fn.systemlist('pydoc3 ' .. search) 
   local result_len = table.maxn(result)
-  
+
   -- Split a new widow
   vim.api.nvim_command('split new') 
   
@@ -42,7 +64,21 @@ local function open_pydoc(search)
   -- FIXME: Buf with name already exists, when a pydoc window is open
   vim.api.nvim_buf_set_name(bufnr, "PYDOC") 
   vim.api.nvim_buf_set_lines(bufnr, 0, 1, false, result)
-  
+
+  -- Get all the highlights 
+  local highlights = detect_highlights(result)
+  -- Apply highlights
+  for _,v in pairs(highlights) do
+    vim.api.nvim_buf_add_highlight(
+      bufnr,
+      -1,
+      v['highlight'],
+      v['line'],
+      v['cols'][1],
+      v['cols'][2]
+    )
+  end
+
   -- Set q to close the window using close_window()
   vim.api.nvim_buf_set_keymap(
     bufnr,
@@ -56,7 +92,6 @@ local function open_pydoc(search)
     }
   )
   
-
   -- Make sure that the buffer is not modifiable and cant be saved etc...
   vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
   vim.api.nvim_buf_set_option(bufnr, 'readonly', true)
