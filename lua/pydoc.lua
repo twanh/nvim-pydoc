@@ -1,9 +1,4 @@
--- Shows pydoc
--- Note: not installed using packer
--- TODO: 
---  - Create option to use pydoc for python 2
---  - Create highlight groups
-
+-- Shows pydoc like the :help menu 
 local winnr, bufnr
 
 local function close_pydoc()
@@ -15,10 +10,8 @@ local function open_pydoc(search)
   -- Get the pydoc output
   local result = vim.fn.systemlist('pydoc3 ' .. search) 
   -- Split a new widow
-  -- TODO: Create option to split vertically or horintally
   vim.api.nvim_command('split new') 
   -- Set the window height
-  -- TODO: Base window height on the length of the lines
   vim.api.nvim_win_set_height(0, 30) 
   -- Get the window and buf numbers 
   winnr = vim.api.nvim_tabpage_get_win(0) 
