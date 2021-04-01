@@ -8,7 +8,18 @@ Shows the `pydoc` documentation in a window in nvim.
 
 Make sure that you have `pydoc3` installed an is on your PATH. 
 
-Install the plugin: `use twanh/nvim-pydoc`
+Install the plugin
+
+```lua
+-- Using packer
+use 'twanh/nvim-pydoc'
+```
+```vim
+" Using vim Plug
+plug 'twanh/nvim-pydoc'
+```
+
+Or use any method you like.
 
 ## Usage
 
