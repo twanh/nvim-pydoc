@@ -33,9 +33,16 @@ local function detect_highlights(result)
 end
 
 local function open_pydoc(search)
-  
+
+  -- Check if the global variable is set for the pydoc commands
+  -- If it is not fall back to the default `pydoc3`
+  g_pydoc_cmd = vim.g.nvim_pydoc_command
+  if (g_pydoc_cmd == nil or g_pydoc_cmd == '') then
+    g_pydoc_cmd = 'pydoc3'
+  end
+
   -- Get the pydoc output
-  local result = vim.fn.systemlist('pydoc3 ' .. search) 
+  local result = vim.fn.systemlist(g_pydoc_cmd .. ' ' .. search) 
   local result_len = table.maxn(result)
 
   -- Split a new widow
