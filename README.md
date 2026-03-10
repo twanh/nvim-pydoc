@@ -1,47 +1,127 @@
-# Nvim Pydoc
+# nvim-pydoc
 
-> Still very much a work in progress 
-
-Shows the `pydoc` documentation in a window in nvim.
+Shows Python documentation from the `pydoc` command in a neovim window.
 
 ![example](https://media.giphy.com/media/ZvIsb0uivq6aGaggF6/giphy.gif)
 
-## Installing
+## Requirements
 
-> This plugin is build for neovim with lua support. (>0.5). Without lua support this plugin will not work!
+- Neovim 0.8+
+- Python with `pydoc` installed
 
-Make sure that you have `pydoc3` installed and is on your PATH. 
+## Installation
 
-Install the plugin
+### [lazy.nvim](https://github.com/folke/lazy.nvim)
 
 ```lua
--- Using packer
-use 'twanh/nvim-pydoc'
+return {
+  'twanh/nvim-pydoc',
+  cmd = 'Pydoc',
+  keys = {
+    { '<leader>pd', ':Pydoc ', desc = 'Open pydoc' },
+    { 'K', ':Pydoc ', desc = 'Pydoc word under cursor' },
+  },
+}
 ```
+
+### [packer.nvim](https://github.com/wbthomason/packer.nvim)
+
+```lua
+use {
+  'twanh/nvim-pydoc',
+  cmd = { 'Pydoc' },
+  keys = { '<leader>pd' },
+}
+```
+
+### [vim-plug](https://github.com/junegunn/vim-plug)
+
 ```vim
-" Using vim Plug
 Plug 'twanh/nvim-pydoc'
 ```
 
-Or use any method you like.
-
 ## Usage
 
-Simple execute the `:Pydoc` command with the module (of function) you want the docs on
+### Commands
 
-For example: `:Pydoc os.path` 
+```vim
+:Pydoc os.path
+:Pydoc json
+:Pydoc collections
+```
 
-You can quit the window simply by pressing `q` in `normal` mode. You can also quit the buffer in any way you like/are used to.
+### Keybindings
 
-By default `pydoc3` is used to get the documentation.
-You can change which version of pydoc is used by setting `vim.g.nvim_pydoc_command`
-E.g.: `vim.g.nvim_pydoc_command=pydoc2`
+The plugin provides default keybindings (lazy.nvim/packer):
 
-## TODO:
+| Keybinding | Action |
+|------------|--------|
+| `<leader>pd` | Open pydoc (prompts for module) |
+| `K` | Pydoc word under cursor |
 
-- [x] Add the option to use custom path/command to pydoc (for using with `pydoc`/`pydoc3`, etc)
-- [ ] Add highlight groups to replicate the highlights from the actual `pydoc` command
-- [ ] Allow for changing `q` keybinding
-- [x] Change window height based on length of the `pydoc` output
-- [ ] Add option to use vertical split or horizontal split
-- [ ] Search for term under the cursor
+Press `q` to close the pydoc window.
+
+## Configuration
+
+Call `require('pydoc').setup()` in your init.lua:
+
+```lua
+require('pydoc').setup({
+  -- Keybinding to close the window (use false to disable)
+  keymaps = {
+    close = 'q',
+  },
+
+  -- Maximum window height
+  win_height = 25,
+
+  -- Pydoc command to use (pydoc, pydoc3, pydoc3.11, etc.)
+  pydoc_cmd = 'pydoc3',
+})
+```
+
+### Custom Keybindings
+
+The plugin provides `<Plug>(PydocClose)` for custom keybindings. To change the close key:
+
+```lua
+vim.keymap.set('n', '<leader>q', '<Plug>(PydocClose)', { desc = 'Close pydoc' })
+```
+
+Or completely disable the default:
+
+```lua
+require('pydoc').setup({
+  keymaps = {
+    close = false,
+  },
+})
+```
+
+## Highlights
+
+The plugin defines these highlight groups:
+
+- `PydocHeader` - Linked to `Title` by default
+- `PydocFunction` - Linked to `Function` by default
+
+To customize:
+
+```lua
+vim.api.nvim_set_hl(0, 'PydocHeader', { fg = '#ffaa00', bold = true })
+```
+
+## Lua API
+
+```lua
+local pydoc = require('pydoc')
+
+-- Open pydoc for a module
+pydoc.open_pydoc('os.path')
+
+-- Close the pydoc window
+pydoc.close_pydoc()
+
+-- Configure the plugin
+pydoc.setup({ win_height = 30 })
+```
